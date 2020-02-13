@@ -1,0 +1,21 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: SimianCheck
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    properties:
+        hibernate:
+          dialect: org.hibernate.dialect.PostgreSQLDialect
+          jdbc: 
+            lob:  
+              non_contextual_creation: true
+  datasource:
+    driverClassName: org.postgresql.Driver
+    url: jdbc:postgresql://raja.db.elephantsql.com:5432/nnzgpbos
+    username: nnzgpbos
+    password: 0cHmrrN4hZDIHTS8sK5h91mJjXdU9uSz
