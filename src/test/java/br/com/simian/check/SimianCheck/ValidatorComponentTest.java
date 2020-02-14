@@ -14,12 +14,12 @@ public class ValidatorComponentTest {
 
 	@Test
 	public void testEmptyDnaReturnFalse() {
-		assertFalse(validator.checkValidDna(new DnaVO()));
+		assertFalse(validator.validDnaArray(new DnaVO()));
 	}
 
 	@Test
 	public void testNullDnaReturnFalse() {
-		assertFalse(validator.checkValidDna(null));
+		assertFalse(validator.validDnaArray(null));
 	}
 
 	@Test
@@ -27,7 +27,7 @@ public class ValidatorComponentTest {
 		String[] dnaTable = new String[] { "GGGG", "GGGG", "GGGG", "GGGG" };
 		DnaVO dna = new DnaVO();
 		dna.setDnaTable(dnaTable);
-		assertTrue(validator.checkValidDna(dna));
+		assertTrue(validator.validDnaArray(dna));
 	}
 	
 	@Test
@@ -35,7 +35,7 @@ public class ValidatorComponentTest {
         String[] dnaTable= new String[]{"AAA", "AAA", "AAA"};
         DnaVO dna= new DnaVO();
         dna.setDnaTable(dnaTable);
-        assertFalse(validator.checkValidDna(dna));
+        assertFalse(validator.validDnaArray(dna));
     }
 	
 	@Test
@@ -43,7 +43,7 @@ public class ValidatorComponentTest {
         String[] dnaTable= new String[]{"AAAA", "GGGG", "AAAA","AAAAA"};
         DnaVO dna= new DnaVO();
         dna.setDnaTable(dnaTable);
-        assertFalse(validator.checkValidDna(dna));
+        assertFalse(validator.validDnaArray(dna));
     }
 	
 	@Test
@@ -51,6 +51,6 @@ public class ValidatorComponentTest {
         String[] dnaTable= new String[]{"AAAA", "AAYA", "AAAA","AAAZ"};
         DnaVO dna= new DnaVO();
         dna.setDnaTable(dnaTable);
-        assertFalse(validator.checkValidDna(dna));
+        assertFalse(validator.validDnaArray(dna));
     }
 }
