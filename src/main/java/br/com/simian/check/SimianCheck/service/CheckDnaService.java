@@ -1,13 +1,13 @@
 package br.com.simian.check.SimianCheck.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Service;
 
 import br.com.simian.check.SimianCheck.domain.DnaVO;
 import br.com.simian.check.SimianCheck.domain.StatDTO;
 import br.com.simian.check.SimianCheck.repository.CheckDnaRepository;
 
-@Controller
+@Service
 public class CheckDnaService implements ICheckDnaService{
 
 	@Autowired
@@ -16,10 +16,11 @@ public class CheckDnaService implements ICheckDnaService{
     private int seqPrincipal;
 	
 	public boolean isSimian(String[] dna){
+		seqPrincipal = 0;
         boolean isSimian= false;
         int i=0;
         int j=0;
-        while(i<dna.length && !isSimian){
+        while((i<dna.length && !isSimian ) || seqPrincipal == 0){
             while(j<dna[i].length() && !isSimian) {
             	isSimian = isSimianTestDna(dna, i, j);
                 j++;

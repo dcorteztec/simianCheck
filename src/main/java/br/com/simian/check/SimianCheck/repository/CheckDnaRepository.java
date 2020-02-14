@@ -10,9 +10,12 @@ import br.com.simian.check.SimianCheck.domain.DnaVO;
 public interface CheckDnaRepository extends JpaRepository<DnaVO, Long>{
 
 	@Query(value =  "Select COUNT(1) from dna where is_simian=true GROUP BY is_simian ", nativeQuery = true)
-	Integer totalSimian();
+	public Integer totalSimian();
 	
 	@Query(value = "Select COUNT(1) from dna where is_simian=false GROUP BY is_simian ", nativeQuery = true)
-	Integer totalHuman();
+	public Integer totalHuman();
+
+	@Query(value = "SELECT d FROM DnaVO d WHERE d.dnaSeq = ?1  ")
+	public DnaVO findByDna(String dnaSeq);
 
 }

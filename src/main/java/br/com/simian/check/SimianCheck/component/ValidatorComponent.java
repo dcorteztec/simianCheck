@@ -1,20 +1,30 @@
 package br.com.simian.check.SimianCheck.component;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import br.com.simian.check.SimianCheck.domain.DnaVO;
+import br.com.simian.check.SimianCheck.repository.CheckDnaRepository;
 
 @Component
-public class ValidatorComponent {
+public class ValidatorComponent implements IValidatorComponent{
 	
-	public boolean checkValidDna(DnaVO dna) {
-		if(!validIsNotNull(dna)) {
+	@Autowired
+	private CheckDnaRepository repository;
+	
+	public boolean checkValidateDnaSeq(String dnaSeq) {
+		if(repository.findByDna(dnaSeq)!=null) {
+			return true;
+		}
+		return false;
+	}
+	
+	public boolean validDnaArray(DnaVO dna) {
+		if(!validIsNotNull(dna)||!checkValidateDnaSeq(dna.getDnaSeq())) {
 			return false;
-		}else if(!validLength(dna.getDnaTable())) {
+		}else if(!validLength(dna.getDnaTable())||!validTable(dna.getDnaTable())) {
 			return false;
-		}else if(!validTable(dna.getDnaTable())) {
-			return false;
-        }else if(!validChars(dna.getDnaTable())) {
+		}else if(!validChars(dna.getDnaTable())) {
         	return false;
         }
         return true;

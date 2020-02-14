@@ -12,7 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.simian.check.SimianCheck.component.ValidatorComponent;
+import br.com.simian.check.SimianCheck.component.IValidatorComponent;
 import br.com.simian.check.SimianCheck.domain.DnaVO;
 import br.com.simian.check.SimianCheck.domain.StatDTO;
 import br.com.simian.check.SimianCheck.service.ICheckDnaService;
@@ -24,15 +24,16 @@ public class CheckDnaController implements ICheckDnaController{
 	private ICheckDnaService service;
 
 	@Autowired
-	private ValidatorComponent componenteValidator;
+	private IValidatorComponent componenteValidator;
 
 	@Override
 	public ResponseEntity<Object> isSimian(@RequestBody DnaVO dna, HttpServletRequest req, HttpServletResponse res) {
-		if (!componenteValidator.checkValidDna(dna)) {
-			return ResponseEntity.status(HttpStatus.FORBIDDEN).contentType(MediaType.APPLICATION_JSON).build();
-		} else {
-			service.isSimian(dna.getDnaTable());
+		if (!componenteValidator.validDnaArray(dna)) {
+			return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).contentType(MediaType.APPLICATION_JSON).build();
+		} else if(service.isSimian(dna.getDnaTable())){
 			return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).build();
+		}else {
+			return ResponseEntity.status(HttpStatus.FORBIDDEN).contentType(MediaType.APPLICATION_JSON).build();
 		}
 	}
 
