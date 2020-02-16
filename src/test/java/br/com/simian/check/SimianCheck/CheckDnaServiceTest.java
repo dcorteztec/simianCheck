@@ -9,30 +9,24 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.TestConfiguration;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.context.annotation.Bean;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import br.com.simian.check.SimianCheck.domain.DnaVO;
 import br.com.simian.check.SimianCheck.repository.CheckDnaRepository;
-import br.com.simian.check.SimianCheck.service.CheckDnaService;
 import br.com.simian.check.SimianCheck.service.ICheckDnaService;
 
 @RunWith(SpringRunner.class)
+@SpringBootTest
+@AutoConfigureMockMvc
+@ActiveProfiles("integrationtest") 
 public class CheckDnaServiceTest {
 
-	@TestConfiguration
-    static class CheckDnaServiceImplTestContextConfiguration {
-  
-        @Bean
-        public ICheckDnaService employeeService() {
-            return new CheckDnaService();
-        }
-    }
-	
 	@Autowired
-    private CheckDnaService service;
+    private ICheckDnaService service;
  
     @MockBean
     private CheckDnaRepository repository;
@@ -49,6 +43,31 @@ public class CheckDnaServiceTest {
     @Test
     public void isSimian() {
         String dna = "ATGCGA, CAGTGC, TTATGT, AGAAGG, CCCCTA, TCACTA";
+        String dnaArray[] = dna.split(",");
+        Boolean bol = service.isSimian(dnaArray);
+        assertTrue(bol);
+     }
+   
+    
+    @Test
+    public void isSimianDiagonal() {
+        String dna = "ATGCGA, CAGTGC, TTATTT, AGAAGG, AGGTTA, TCACTA";
+        String dnaArray[] = dna.split(",");
+        Boolean bol = service.isSimian(dnaArray);
+        assertTrue(bol);
+     }
+    
+    @Test
+    public void isSimianVert() {
+        String dna = "ATGCGA, CGGTGC, TTATTT, AGAAGG, AGATTA, TCACTA";
+        String dnaArray[] = dna.split(",");
+        Boolean bol = service.isSimian(dnaArray);
+        assertTrue(bol);
+     }
+    
+    @Test
+    public void isHuman() {
+        String dna = "ATGCGA, CAGTGC, TTATTT, AGACGG, GCGTCA, TCACTG";
         String dnaArray[] = dna.split(",");
         Boolean bol = service.isSimian(dnaArray);
         assertTrue(bol);

@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import br.com.simian.check.SimianCheck.domain.DnaVO;
 import br.com.simian.check.SimianCheck.domain.StatDTO;
 import br.com.simian.check.SimianCheck.repository.CheckDnaRepository;
+import br.com.simian.check.SimianCheck.utils.UtilTransform;
 
 @Service
 public class CheckDnaService implements ICheckDnaService{
@@ -20,7 +21,7 @@ public class CheckDnaService implements ICheckDnaService{
         boolean isSimian= false;
         int i=0;
         int j=0;
-        while((i<dna.length && !isSimian ) || seqPrincipal == 0){
+        while(i<dna.length && !isSimian ){
             while(j<dna[i].length() && !isSimian) {
             	isSimian = isSimianTestDna(dna, i, j);
                 j++;
@@ -28,7 +29,7 @@ public class CheckDnaService implements ICheckDnaService{
             j=0;
             i++;
         }
-        repository.save(preparaDna(stringToStringArray(dna),isSimian));
+        repository.save(preparaDna(UtilTransform.stringToStringArray(dna),isSimian));
         return isSimian;
     }
 
@@ -44,7 +45,7 @@ public class CheckDnaService implements ICheckDnaService{
     	setSeqPrincipal(seqPrincipal+=analiseHorizontal(dna, i, j));
     	setSeqPrincipal(seqPrincipal+=analiseDiagonalPrincipal(dna, i, j));
     	setSeqPrincipal(seqPrincipal+=analiseDiagonalSecundaria(dna, i, j));
-    	if(seqPrincipal>1) {
+    	if(seqPrincipal>=1) {
     		return true;
     	}
         return false;
@@ -110,14 +111,6 @@ public class CheckDnaService implements ICheckDnaService{
 		this.seqPrincipal = seqPrincipal;
 	}
 	
-	public String stringToStringArray(String[] stringArray){
-        StringBuilder builder= new StringBuilder();
-        builder.append(stringArray[0]);
-        for(int i=1; i<stringArray.length; i++){
-            builder.append(", ").append(stringArray[i]);
-        }
-        return builder.toString();
-    }
 
 	public StatDTO getStats() {
 		int totalSimin = 0;

@@ -10,12 +10,10 @@ spring:
       ddl-auto: create
     properties:
         hibernate:
-          dialect: org.hibernate.dialect.PostgreSQLDialect
+          dialect: org.hibernate.dialect.H2Dialect
           jdbc: 
             lob:  
               non_contextual_creation: true
   datasource:
-    driverClassName: org.postgresql.Driver
-    url: jdbc:postgresql://raja.db.elephantsql.com:5432/nnzgpbos
-    username: nnzgpbos
-    password: 0cHmrrN4hZDIHTS8sK5h91mJjXdU9uSz
+    driverClassName: org.h2.Driver
+    url: jdbc:h2:mem:test

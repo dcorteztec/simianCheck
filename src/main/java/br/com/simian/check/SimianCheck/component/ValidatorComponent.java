@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 
 import br.com.simian.check.SimianCheck.domain.DnaVO;
 import br.com.simian.check.SimianCheck.repository.CheckDnaRepository;
+import br.com.simian.check.SimianCheck.utils.UtilTransform;
 
 @Component
 public class ValidatorComponent implements IValidatorComponent{
@@ -12,15 +13,8 @@ public class ValidatorComponent implements IValidatorComponent{
 	@Autowired
 	private CheckDnaRepository repository;
 	
-	public boolean checkValidateDnaSeq(String dnaSeq) {
-		if(repository.findByDna(dnaSeq)!=null) {
-			return true;
-		}
-		return false;
-	}
-	
 	public boolean validDnaArray(DnaVO dna) {
-		if(!validIsNotNull(dna)||!checkValidateDnaSeq(dna.getDnaSeq())) {
+		if(!validIsNotNull(dna)||!checkValidateDnaSeq(dna.getDnaTable())) {
 			return false;
 		}else if(!validLength(dna.getDnaTable())||!validTable(dna.getDnaTable())) {
 			return false;
@@ -30,6 +24,14 @@ public class ValidatorComponent implements IValidatorComponent{
         return true;
     }
 
+	public boolean checkValidateDnaSeq(String[] dnaSeq) {
+		if(repository.findListByDna(UtilTransform.stringToStringArray(dnaSeq)).size()==0) {
+			return true;
+		}
+		return false;
+	}
+	
+	
     private boolean validIsNotNull(DnaVO dna){
         if(dna == null || dna.getDnaTable() == null){
            return false;

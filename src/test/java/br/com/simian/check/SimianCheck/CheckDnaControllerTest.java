@@ -2,8 +2,13 @@ package br.com.simian.check.SimianCheck;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
@@ -16,6 +21,10 @@ import com.fasterxml.jackson.databind.ObjectWriter;
 import br.com.simian.check.SimianCheck.controller.CheckDnaController;
 import br.com.simian.check.SimianCheck.domain.DnaVO;
 
+@RunWith(SpringRunner.class)
+@SpringBootTest
+@AutoConfigureMockMvc
+@ActiveProfiles("integrationtest") 
 public class CheckDnaControllerTest extends CheckDnaApplicationTests{
 
 	private MockMvc mockMvc;
@@ -60,7 +69,7 @@ public class CheckDnaControllerTest extends CheckDnaApplicationTests{
 	public void testPOSTisSimianValidationFailedController() throws Exception {
 		this.mockMvc.perform(MockMvcRequestBuilders.post("/simian").
 				contentType(MediaType.APPLICATION_JSON).content(toJson(dnaInvalid))).
-		andExpect(MockMvcResultMatchers.status().isForbidden());
+		andExpect(MockMvcResultMatchers.status().isNotAcceptable());
     }
 
 	private String toJson(DnaVO dna) throws JsonProcessingException {

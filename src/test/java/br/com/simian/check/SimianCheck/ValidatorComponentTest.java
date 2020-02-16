@@ -3,15 +3,50 @@ package br.com.simian.check.SimianCheck;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import org.junit.Test;
+import java.util.Optional;
 
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mockito;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.TestConfiguration;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Bean;
+import org.springframework.test.context.junit4.SpringRunner;
+
+import br.com.simian.check.SimianCheck.component.IValidatorComponent;
 import br.com.simian.check.SimianCheck.component.ValidatorComponent;
 import br.com.simian.check.SimianCheck.domain.DnaVO;
+import br.com.simian.check.SimianCheck.repository.CheckDnaRepository;
 
+@RunWith(SpringRunner.class)
 public class ValidatorComponentTest {
 
-	private ValidatorComponent validator = new ValidatorComponent();
-
+	@TestConfiguration
+    static class ValidatorComponentTestContextConfiguration {
+  
+        @Bean
+        public IValidatorComponent validatorComponent() {
+            return new ValidatorComponent();
+        }
+    }
+	
+	@Autowired
+    private IValidatorComponent validator;
+	
+	@MockBean
+	private CheckDnaRepository repository;
+	
+	@Before
+    public void setUp() {
+        DnaVO dna = new DnaVO();
+        dna.setDnaSeq("ATGCGA, CAGTGC, TTATGT, AGAAGG, CCCCTA, TCACTA");
+        dna.setId(1l);
+        Optional<DnaVO> dnaOptional = Optional.ofNullable(dna);
+        Mockito.when(repository.findById(dna.getId())).thenReturn(dnaOptional);
+    }
+	
 	@Test
 	public void testEmptyDnaReturnFalse() {
 		assertFalse(validator.validDnaArray(new DnaVO()));

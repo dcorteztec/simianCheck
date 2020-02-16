@@ -1,5 +1,7 @@
 package br.com.simian.check.SimianCheck.repository;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -16,6 +18,6 @@ public interface CheckDnaRepository extends JpaRepository<DnaVO, Long>{
 	public Integer totalHuman();
 
 	@Query(value = "SELECT d FROM DnaVO d WHERE d.dnaSeq = ?1  ")
-	public DnaVO findByDna(String dnaSeq);
+	public List<DnaVO> findListByDna(String dnaSeq);
 
 }
