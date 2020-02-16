@@ -1,5 +1,7 @@
 package br.com.simian.check.SimianCheck.domain;
 
+import java.util.Optional;
+
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -7,27 +9,37 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class StatDTO {
 
 	@JsonProperty("count_simian_dna")
-	private int countSimian;
+	private Optional<Integer> countSimian;
 	@JsonProperty("count_human_dna")
-	private int countHuman;
+	private Optional<Integer> countHuman;
 	@JsonProperty("ratio")
 	private float ratio;
 	
-	public StatDTO(int countSimian, int countHuman) {
+	public StatDTO() {
+		
+	}
+	
+	public StatDTO(Optional<Integer> countSimian, Optional<Integer> countHuman) {
 		this.countSimian = countSimian;
 		this.countHuman = countHuman;
 		setRadio();
 	}
-	public int getCountSimian() {
+	public Optional<Integer> getCountSimian() {
+		if(!countSimian.isPresent()) {
+			return Optional.ofNullable(0);
+		}
 		return countSimian;
 	}
-	public void setCountSimian(int countSimian) {
+	public void setCountSimian(Optional<Integer> countSimian) {
 		this.countSimian = countSimian;
 	}
-	public int getCountHuman() {
+	public Optional<Integer> getCountHuman() {
+		if(!countHuman.isPresent()) {
+			return Optional.ofNullable(0);
+		}
 		return countHuman;
 	}
-	public void setCountHuman(int countHuman) {
+	public void setCountHuman(Optional<Integer> countHuman) {
 		this.countHuman = countHuman;
 	}
 	public float getRatio() {
@@ -38,13 +50,16 @@ public class StatDTO {
 	}
 	
 	private void setRadio(){
-        if(countSimian>0 && countHuman>0) {
-            ratio =(float)Math.round((float) countSimian / (countHuman + countSimian)*100)/100;
-        }else if(countSimian==0){
-            ratio= 0;
-        }else {
+        if(countSimian.get()>0 && countHuman.get()>0) {
+            ratio =(float)Math.round((float) countSimian.get() / (countHuman.get() + countSimian.get())*100)/100;
+        }else if(countSimian.get()==0 && countHuman.get()>0){
             ratio= 1;
+        }else if(countSimian.get()>0 && countHuman.get()==0) {
+            ratio= 1;
+        }else {
+        	ratio= 0;
         }
+	
     }
 	
 

@@ -64,7 +64,7 @@ public class CheckDnaControllerTest extends CheckDnaApplicationTests{
 	public void testPOSTisSimianValidationFailedController() throws Exception {
 		this.mockMvc.perform(MockMvcRequestBuilders.post("/simian").
 				contentType(MediaType.APPLICATION_JSON).content(toJson(dnaInvalid))).
-		andExpect(MockMvcResultMatchers.status().isNotAcceptable());
+		andExpect(MockMvcResultMatchers.status().isForbidden());
     }
 
 	private String toJson(DnaVO dna) throws JsonProcessingException {

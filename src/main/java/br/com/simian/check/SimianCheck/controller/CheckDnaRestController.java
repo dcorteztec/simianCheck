@@ -25,9 +25,7 @@ public class CheckDnaRestController implements ICheckDnaRestController{
 
 	@Override
 	public ResponseEntity<Object> isSimian(@RequestBody DnaVO dna, HttpServletRequest req, HttpServletResponse res) {
-		if (!componenteValidator.validDnaArray(dna)) {
-			return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).contentType(MediaType.APPLICATION_JSON).build();
-		} else if(service.isSimian(dna.getDnaTable())){
+		 if(componenteValidator.validDnaArray(dna)&&service.isSimian(dna.getDnaTable())){
 			return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).build();
 		}else {
 			return ResponseEntity.status(HttpStatus.FORBIDDEN).contentType(MediaType.APPLICATION_JSON).build();
