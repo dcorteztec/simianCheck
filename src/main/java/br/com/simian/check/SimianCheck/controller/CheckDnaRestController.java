@@ -1,7 +1,5 @@
 package br.com.simian.check.SimianCheck.controller;
 
-import java.util.Optional;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -14,11 +12,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.simian.check.SimianCheck.component.IValidatorComponent;
 import br.com.simian.check.SimianCheck.domain.DnaVO;
-import br.com.simian.check.SimianCheck.domain.StatDTO;
 import br.com.simian.check.SimianCheck.service.ICheckDnaService;
 
 @RestController
-public class CheckDnaController implements ICheckDnaController{
+public class CheckDnaRestController implements ICheckDnaRestController{
 
 	@Autowired
 	private ICheckDnaService service;
@@ -35,12 +32,6 @@ public class CheckDnaController implements ICheckDnaController{
 		}else {
 			return ResponseEntity.status(HttpStatus.FORBIDDEN).contentType(MediaType.APPLICATION_JSON).build();
 		}
-	}
-
-	@Override
-	public ResponseEntity<Optional<StatDTO>> stats(HttpServletRequest req, HttpServletResponse res) {
-		StatDTO stats = service.getStats();
-		return new ResponseEntity<Optional<StatDTO>>(Optional.of(stats), HttpStatus.OK);
 	}
 
 }

@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.simian.check.SimianCheck.domain.DnaVO;
-import br.com.simian.check.SimianCheck.domain.StatDTO;
 import br.com.simian.check.SimianCheck.repository.CheckDnaRepository;
 import br.com.simian.check.SimianCheck.utils.UtilTransform;
 
@@ -110,18 +109,5 @@ public class CheckDnaService implements ICheckDnaService{
 	public void setSeqPrincipal(int seqPrincipal) {
 		this.seqPrincipal = seqPrincipal;
 	}
-	
-
-	public StatDTO getStats() {
-		int totalSimin = 0;
-		int totalHuman = 0;
-		if(repository.totalSimian()!=null) {
-			totalSimin = repository.totalSimian(); 
-		}else if(repository.totalHuman()!=null) {
-			totalHuman = repository.totalHuman();
-		}
-		return new StatDTO(totalSimin, totalHuman);
-	}
-
-	
+		
 }

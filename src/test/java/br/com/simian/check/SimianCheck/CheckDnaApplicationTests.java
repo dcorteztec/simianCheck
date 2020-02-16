@@ -10,14 +10,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import br.com.simian.check.SimianCheck.controller.CheckDnaController;
+import br.com.simian.check.SimianCheck.controller.CheckDnaRestController;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class CheckDnaApplicationTests {
 
 	@Autowired
-	private CheckDnaController controller;
+	private CheckDnaRestController controller;
 	
 	@Test
 	public void contextLoads() {

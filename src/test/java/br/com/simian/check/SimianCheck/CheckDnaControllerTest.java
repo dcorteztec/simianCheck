@@ -18,7 +18,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 
-import br.com.simian.check.SimianCheck.controller.CheckDnaController;
+import br.com.simian.check.SimianCheck.controller.CheckDnaRestController;
 import br.com.simian.check.SimianCheck.domain.DnaVO;
 
 @RunWith(SpringRunner.class)
@@ -32,16 +32,11 @@ public class CheckDnaControllerTest extends CheckDnaApplicationTests{
 	private DnaVO dnaInvalid = createDnaInvalid();
 	
 	@Autowired
-	private CheckDnaController controller;
+	private CheckDnaRestController controller;
 	
 	@Before
 	public void setUp() {
 		this.mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
-	}
-	
-	@Test
-	public void testGETStatsController() throws Exception {
-		this.mockMvc.perform(MockMvcRequestBuilders.get("/stats")).andExpect(MockMvcResultMatchers.status().isOk());
 	}
 	
 	private DnaVO createDna() {
