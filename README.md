@@ -5,7 +5,7 @@ humano e quem é símio.
 
 Esse projeto foi feito para detectar se uma sequência de DNA é humana ou de um símio
 	
-## POST https://simiancheck.herokuapp.com/simian
+## POST https://simiancheck.herokuapp.com/isSimian
 Este serviço recebe a sequencia de DNA e avalia se é um símio ou não.
 ```
 {
