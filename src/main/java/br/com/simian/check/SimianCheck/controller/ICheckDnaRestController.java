@@ -11,7 +11,7 @@ import br.com.simian.check.SimianCheck.domain.DnaVO;
 
 public interface ICheckDnaRestController {
 
-	@PostMapping(value = "simian")
+	@PostMapping(value = "isSimian")
 	public ResponseEntity<Object> isSimian(@RequestBody DnaVO dna, HttpServletRequest req, HttpServletResponse res);
 	
 }
